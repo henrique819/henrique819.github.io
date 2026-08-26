@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfólio — Luis Shikasho</title>
+<meta name="description" content="Projetos de dados end-to-end, filtráveis por área de negócio e tecnologia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*=============== TOKENS ===============*/
+:root{
+  --hue:214;
+  --primary:hsl(var(--hue),89%,48%);
+  --primary-alt:hsl(var(--hue),89%,40%);
+  --primary-light:hsl(var(--hue),89%,94%);
+  --title-color:hsl(var(--hue),12%,15%);
+  --text-color:hsl(var(--hue),8%,45%);
+  --text-color-light:hsl(var(--hue),8%,60%);
+  --body-color:hsl(var(--hue),60%,99%);
+  --container-color:#fff;
+  --border-color:hsl(var(--hue),12%,90%);
+  --body-font:"Poppins",system-ui,sans-serif;
+  --h1-font:clamp(1.8rem,5vw,2.5rem);
+  --h3-font:1.05rem;
+  --normal-font:.95rem;
+  --small-font:.82rem;
+  --smaller-font:.76rem;
+  --header-height:3.5rem;
+}
+body.dark-theme{
+  --title-color:hsl(var(--hue),8%,95%);
+  --text-color:hsl(var(--hue),8%,75%);
+  --text-color-light:hsl(var(--hue),8%,55%);
+  --body-color:hsl(var(--hue),10%,12%);
+  --container-color:hsl(var(--hue),10%,16%);
+  --border-color:hsl(var(--hue),10%,24%);
+  --primary-light:hsl(var(--hue),30%,22%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body-font);font-size:var(--normal-font);
+  background-color:var(--body-color);color:var(--text-color);line-height:1.7;
+  transition:background-color .35s,color .35s;padding-bottom:4rem;
+}
+body.no-scroll{overflow:hidden}
+h1,h2,h3,h4{color:var(--title-color);font-weight:600;line-height:1.3}
+ul{list-style:none}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button,input,select{font-family:var(--body-font);font-size:var(--normal-font);border:none;outline:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:4px}
+.container{max-width:1120px;margin-inline:auto;padding-inline:1.5rem}
+.icon{width:1.25rem;height:1.25rem;fill:none;stroke:currentColor;stroke-width:1.8;
+      stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/*=============== HEADER ===============*/
+.header{position:fixed;bottom:0;left:0;width:100%;z-index:100;background-color:var(--body-color);transition:background-color .35s}
+.nav{height:var(--header-height);display:flex;justify-content:space-between;align-items:center}
+.nav__logo{font-weight:600;color:var(--title-color)}
+.nav__logo:hover{color:var(--primary)}
+.nav__menu{
+  position:fixed;bottom:-100%;left:0;width:100%;background-color:var(--body-color);
+  padding:2rem 1.5rem 4rem;box-shadow:0 -1px 4px rgba(0,0,0,.15);
+  border-radius:1.5rem 1.5rem 0 0;transition:bottom .3s;
+}
+.nav__menu.show-menu{bottom:0}
+.nav__list{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.nav__link{display:flex;flex-direction:column;align-items:center;gap:.25rem;
+  font-size:var(--smaller-font);color:var(--title-color);font-weight:500;transition:color .3s}
+.nav__link:hover,.nav__link.active-link{color:var(--primary)}
+.nav__toggle,.nav__close,.nav__theme{cursor:pointer;color:var(--title-color);display:flex}
+.nav__close{position:absolute;right:1.3rem;bottom:.5rem}
+.nav__actions{display:flex;align-items:center;gap:1rem}
+
+/*=============== FAIXA DE TÍTULO ===============*/
+.pagehead{
+  background-color:var(--container-color);border-bottom:1px solid var(--border-color);
+  padding:3rem 0;text-align:center;margin-bottom:2.5rem;
+}
+.pagehead h1{font-size:var(--h1-font);letter-spacing:.02em}
+.pagehead p{font-size:var(--small-font);color:var(--text-color-light)}
+
+/*=============== LAYOUT ===============*/
+.shop{display:grid;grid-template-columns:1fr;gap:2rem;align-items:start}
+.toolbar{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.toolbar__count{font-size:var(--small-font);color:var(--text-color-light)}
+.toolbar__right{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.select,.search{
+  border:1px solid var(--border-color);border-radius:.5rem;padding:.55rem .85rem;
+  font-size:var(--small-font);background-color:var(--container-color);color:var(--title-color);
+}
+.search{min-width:190px}
+
+/*=============== FILTROS ===============*/
+.filters{display:grid;gap:1rem}
+.filters__toggle{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;
+  background-color:var(--container-color);border:1px solid var(--border-color);
+  border-radius:.5rem;padding:.8rem;cursor:pointer;color:var(--title-color);font-weight:500;
+}
+.filters__panel{display:none;gap:1rem;grid-template-columns:1fr}
+.filters__panel.is-open{display:grid}
+.filters__clear{
+  width:100%;background-color:var(--primary);color:#fff;border-radius:.5rem;padding:.8rem;
+  font-weight:600;letter-spacing:.05em;font-size:var(--small-font);text-transform:uppercase;
+  cursor:pointer;transition:background-color .3s;
+}
+.filters__clear:hover{background-color:var(--primary-alt)}
+.filters__clear[disabled]{opacity:.45;cursor:default}
+.fgroup{background-color:var(--container-color);border:1px solid var(--border-color);border-radius:.6rem;padding:1rem 1.15rem}
+.fgroup__title{font-size:var(--smaller-font);letter-spacing:.09em;text-transform:uppercase;
+  color:var(--title-color);font-weight:600;margin-bottom:.75rem}
+.fopt{display:flex;align-items:center;gap:.6rem;padding:.28rem 0;cursor:pointer;font-size:var(--small-font)}
+.fopt input{width:1rem;height:1rem;accent-color:var(--primary);cursor:pointer;flex-shrink:0}
+.fopt:hover{color:var(--title-color)}
+.fopt__count{margin-left:auto;font-size:var(--smaller-font);color:var(--text-color-light)}
+
+/*=============== CARDS ===============*/
+.projects{display:grid;gap:1.25rem}
+.proj{
+  background-color:var(--container-color);border:1px solid var(--border-color);
+  border-radius:.75rem;overflow:hidden;
+  transition:box-shadow .3s,transform .3s,border-color .3s;
+  display:grid;grid-template-columns:1fr;
+}
+.proj:hover{box-shadow:0 6px 20px rgba(0,0,0,.07);transform:translateY(-2px);border-color:var(--primary)}
+.proj__cover{
+  position:relative;background-color:var(--primary-light);
+  aspect-ratio:16/9;overflow:hidden;
+}
+.proj__cover img{width:100%;height:100%;object-fit:cover}
+.proj__cover-empty{
+  width:100%;height:100%;display:grid;place-items:center;
+  color:var(--primary);font-size:var(--smaller-font);text-align:center;padding:1rem;
+}
+.proj__badges{position:absolute;top:.6rem;left:.6rem;display:flex;gap:.35rem;flex-wrap:wrap}
+.badge{
+  background-color:rgba(0,0,0,.65);color:#fff;border-radius:1rem;
+  font-size:var(--smaller-font);padding:.15rem .55rem;display:inline-flex;align-items:center;gap:.3rem;
+}
+.proj__body{padding:1.3rem}
+.proj__top{display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline;justify-content:space-between}
+.proj__title{font-size:var(--h3-font)}
+.proj__meta{display:flex;align-items:center;gap:.35rem;font-size:var(--smaller-font);
+  color:var(--text-color-light);white-space:nowrap}
+.proj__desc{font-size:var(--small-font);margin:.6rem 0 1rem;max-width:62ch}
+
+/* trilha de etapas — a prova visual do end-to-end */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin-bottom:1rem}
+.flow__step{
+  font-size:var(--smaller-font);padding:.18rem .55rem;border-radius:.35rem;
+  background-color:var(--primary-light);color:var(--primary);white-space:nowrap;
+}
+body.dark-theme .flow__step{color:hsl(var(--hue),89%,72%)}
+.flow__arrow{color:var(--text-color-light);font-size:.7rem;line-height:1}
+
+.proj__tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem}
+.tag{font-size:var(--smaller-font);padding:.22rem .6rem;border-radius:1rem;line-height:1.5}
+.tag--negocio{background-color:var(--primary);color:#fff}
+.tag--tec{background-color:var(--primary-light);color:var(--primary)}
+body.dark-theme .tag--tec{color:hsl(var(--hue),89%,72%)}
+.tag--tipo{border:1px solid var(--border-color);color:var(--text-color-light)}
+.proj__actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+.btn-sm{
+  display:inline-flex;align-items:center;gap:.4rem;font-size:var(--small-font);font-weight:500;
+  padding:.5rem .9rem;border-radius:.5rem;cursor:pointer;transition:background-color .3s,color .3s;
+}
+.btn-sm--solid{background-color:var(--primary);color:#fff}
+.btn-sm--solid:hover{background-color:var(--primary-alt)}
+.btn-sm--ghost{color:var(--primary);border:1px solid var(--border-color)}
+.btn-sm--ghost:hover{border-color:var(--primary)}
+
+.empty{text-align:center;padding:3.5rem 1.5rem;border:1px dashed var(--border-color);
+  border-radius:.75rem;color:var(--text-color-light);font-size:var(--small-font)}
+
+/*=============== MODAL DE DETALHE ===============*/
+.modal{
+  position:fixed;inset:0;z-index:200;background-color:rgba(0,0,0,.6);
+  display:none;padding:1rem;overflow-y:auto;
+}
+.modal.is-open{display:block}
+.modal__box{
+  background-color:var(--body-color);border-radius:.9rem;
+  max-width:860px;margin:2rem auto;padding:1.75rem;position:relative;
+}
+.modal__close{
+  position:absolute;top:.9rem;right:.9rem;cursor:pointer;color:var(--title-color);
+  background-color:var(--container-color);border:1px solid var(--border-color);
+  border-radius:.4rem;padding:.35rem;display:flex;
+}
+.modal__title{font-size:1.35rem;padding-right:2.5rem;margin-bottom:.35rem}
+.modal__meta{font-size:var(--smaller-font);color:var(--text-color-light);margin-bottom:1.25rem}
+.modal__media{
+  aspect-ratio:16/9;width:100%;border-radius:.6rem;overflow:hidden;
+  background-color:var(--container-color);border:1px solid var(--border-color);margin-bottom:1.5rem;
+}
+.modal__media iframe,.modal__media video,.modal__media img{width:100%;height:100%;border:0;object-fit:cover}
+.modal__tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.9rem}
+.tab{
+  font-size:var(--small-font);padding:.45rem .9rem;border-radius:.5rem;cursor:pointer;
+  border:1px solid var(--border-color);color:var(--text-color);
+}
+.tab.is-active{background-color:var(--primary);color:#fff;border-color:var(--primary)}
+.modal__block{margin-bottom:1.25rem}
+.modal__block h4{font-size:var(--smaller-font);letter-spacing:.09em;text-transform:uppercase;
+  color:var(--text-color-light);margin-bottom:.25rem}
+.modal__block p{font-size:var(--small-font)}
+.modal__foot{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem;
+  border-top:1px solid var(--border-color);padding-top:1.25rem}
+
+/*=============== FOOTER ===============*/
+.footer{margin-top:4rem}
+.footer__container{border-top:1px solid var(--border-color);padding:2rem 0 1rem;text-align:center}
+.footer__copy{font-size:var(--smaller-font);color:var(--text-color-light)}
+
+/*=============== RESPONSIVO ===============*/
+@media screen and (min-width:600px){
+  .proj{grid-template-columns:250px 1fr}
+  .proj__cover{aspect-ratio:auto;height:100%;min-height:190px}
+}
+@media screen and (min-width:768px){
+  body{padding-bottom:0}
+  .header{top:0;bottom:initial}
+  .nav{height:4.5rem}
+  .nav__toggle,.nav__close{display:none}
+  .nav__menu{position:initial;width:auto;background:none;padding:0;box-shadow:none;border-radius:0;margin-left:auto}
+  .nav__list{display:flex;column-gap:2rem;grid-template-columns:none}
+  .nav__link{flex-direction:row;font-size:var(--normal-font)}
+  .nav__link .icon{display:none}
+  .pagehead{margin-top:4.5rem}
+  .shop{grid-template-columns:250px 1fr;gap:2rem}
+  .filters__toggle{display:none}
+  .filters__panel{display:grid !important}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important;animation:none !important}
+}
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.5V19l4 2v-8.5z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 00-.9-2.6c3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0019.9 4a4.9 4.9 0 00-.1-3.6s-1.1-.3-3.7 1.4a12.7 12.7 0 00-6.6 0C6.9.1 5.8.4 5.8.4A4.9 4.9 0 005.7 4a5.2 5.2 0 00-1.4 3.6c0 5.2 3.2 6.4 6.2 6.7a3.4 3.4 0 00-.9 2.6V21"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5z"/></symbol>
+  <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></symbol>
+</svg>
+
+<!--=============== HEADER ===============-->
+<header class="header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">Luis Shikasho</a>
+    <div class="nav__menu" id="nav-menu">
+      <ul class="nav__list">
+        <li><a href="index.html#home" class="nav__link"><svg class="icon"><use href="#i-home"/></svg> Início</a></li>
+        <li><a href="index.html#about" class="nav__link"><svg class="icon"><use href="#i-user"/></svg> Sobre</a></li>
+        <li><a href="index.html#skills" class="nav__link"><svg class="icon"><use href="#i-code"/></svg> Skills</a></li>
+        <li><a href="index.html#services" class="nav__link"><svg class="icon"><use href="#i-grid"/></svg> Serviços</a></li>
+        <li><a href="portfolio.html" class="nav__link active-link"><svg class="icon"><use href="#i-folder"/></svg> Portfólio</a></li>
+        <li><a href="index.html#contact" class="nav__link"><svg class="icon"><use href="#i-mail"/></svg> Contato</a></li>
+      </ul>
+      <button class="nav__close" id="nav-close" aria-label="Fechar menu"><svg class="icon"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="nav__actions">
+      <button class="nav__toggle" id="nav-toggle" aria-label="Abrir menu"><svg class="icon"><use href="#i-menu"/></svg></button>
+      <button class="nav__theme" id="theme-button" aria-label="Alternar tema"><svg class="icon" id="theme-icon"><use href="#i-moon"/></svg></button>
+    </div>
+  </nav>
+</header>
+
+<div class="pagehead">
+  <h1>PORTFÓLIO</h1>
+  <p>Projetos end-to-end — filtre por área de negócio ou tecnologia</p>
+</div>
+
+<main class="container">
+  <div class="shop">
+    <aside class="filters">
+      <button class="filters__toggle" id="filters-toggle" aria-expanded="false">
+        <svg class="icon"><use href="#i-filter"/></svg>
+        <span id="filters-toggle-text">Filtrar projetos</span>
+      </button>
+      <div class="filters__panel" id="filters-panel">
+        <button class="filters__clear" id="clear-filters" disabled>Limpar filtros</button>
+        <div id="filter-groups"></div>
+      </div>
+    </aside>
+
+    <section>
+      <div class="toolbar">
+        <span class="toolbar__count" id="count"></span>
+        <div class="toolbar__right">
+          <input type="search" class="search" id="search" placeholder="Buscar projeto..." aria-label="Buscar projeto">
+          <select class="select" id="sort" aria-label="Ordenar">
+            <option value="recente">Mais recentes</option>
+            <option value="antigo">Mais antigos</option>
+            <option value="az">Título (A–Z)</option>
+          </select>
+        </div>
+      </div>
+      <div class="projects" id="projects"></div>
+    </section>
+  </div>
+</main>
+
+<!--=============== MODAL ===============-->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal__box">
+    <button class="modal__close" id="modal-close" aria-label="Fechar"><svg class="icon"><use href="#i-close"/></svg></button>
+    <h3 class="modal__title" id="modal-title"></h3>
+    <p class="modal__meta" id="modal-meta"></p>
+    <div class="modal__tabs" id="modal-tabs"></div>
+    <div class="modal__media" id="modal-media"></div>
+    <div id="modal-content"></div>
+    <div class="modal__foot" id="modal-foot"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer__container container">
+    <p class="footer__copy">© 2026 Luis Shikasho · Publicado com GitHub Pages</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   SEUS PROJETOS
+
+   Campos de mídia:
+     capa      → imagem estática do card. 1200x675 (16:9), .webp ou .png
+     video     → link de embed do YouTube ("https://www.youtube.com/embed/ID")
+                 ou arquivo local ("assets/demo.mp4")
+     powerbi   → link do "Publicar na web" do Power BI (veja o aviso abaixo)
+     repo      → link do repositório
+
+   ⚠  "Publicar na web" do Power BI deixa o relatório PÚBLICO para
+      qualquer pessoa da internet, sem login. NUNCA use com dado de
+      empresa. Para o portfólio, refaça o relatório com dado sintético
+      ou público. Se não der, deixe powerbi:"" e mostre só vídeo + capa.
+
+   Etapas: escreva a cadeia que o projeto cobre, na ordem.
+     Dados : Ingestão → Tratamento → Modelagem → Visualização → Entrega
+     DevOps: Provisionamento → Build → Deploy → Monitoramento
+   ============================================================ */
+const PROJETOS = [
+  {
+    titulo: "Rastreabilidade de perdas em malha logística",
+    resumo: "Consolida eventos de bipagem, reconstrói a cadeia de custódia de cada pacote e aponta o último ponto com posse confirmada.",
+    negocio: ["Logística", "Operações"],
+    tecnologias: ["Python", "SQL", "Power BI", "Azure"],
+    tipo: ["End-to-end"],
+    etapas: ["Ingestão", "Tratamento", "Modelagem", "Visualização", "Entrega"],
+    ano: 2026,
+    duracao: "Em produção",
+
+    /* ---- EXEMPLO PREENCHIDO: os três formatos funcionando ----
+       Tudo aqui é conteúdo de demonstração, de terceiros. Troque pelo seu
+       antes de publicar — principalmente o powerbi, que é relatório de outra
+       pessoa e pode sair do ar a qualquer momento.                        */
+    capa:    "assets/demo-dashboard.svg",
+    video:   "https://www.youtube.com/embed/TmhQCQr_DCA",
+    powerbi: "https://app.powerbi.com/view?r=eyJrIjoiMGY5NGRkNzItYmJiMi00Y2Y3LWE2OTItMzlhY2E1NzkxMGI0IiwidCI6IjZmMjhlNWI4LTY3ZmUtNDIwNy1hMDQ4LWNjMTdiOGUxMzQ5OSJ9",
+    repo: "https://github.com/",
+    problema: "Pacotes desapareciam entre o hub e a última milha sem responsável definido. A apuração era manual e levava dias.",
+    solucao: "Pipeline diário que unifica os eventos de bipagem, monta a linha do tempo de cada pacote e aplica regras de divergência para apontar onde a posse se perdeu.",
+    resultado: "Apuração caiu de dias para minutos, com responsabilidade atribuída automaticamente em cada ocorrência."
+  },
+  {
+    titulo: "Camada analítica em Microsoft Fabric",
+    resumo: "Arquitetura medallion com modelo semântico central, substituindo relatórios avulsos por uma fonte única de número.",
+    negocio: ["Logística", "Financeiro"],
+    tecnologias: ["Fabric", "PySpark", "DAX", "Power BI"],
+    tipo: ["End-to-end"],
+    etapas: ["Ingestão", "Tratamento", "Modelagem", "Visualização", "Entrega"],
+    ano: 2026,
+    duracao: "3 meses",
+    capa: "",
+    video: "",
+    powerbi: "",
+    repo: "#",
+    problema: "Cada área mantinha seu próprio relatório e os números não fechavam entre eles.",
+    solucao: "Camadas bronze/silver/gold no Fabric, com modelo semântico único e métricas versionadas.",
+    resultado: "Reunião deixou de começar discutindo de quem é o número certo."
+  },
+  {
+    titulo: "Esteira de deploy dos pipelines",
+    resumo: "CI/CD para os jobs de dados: teste automático, versionamento e publicação sem passo manual.",
+    negocio: ["Operações"],
+    tecnologias: ["GitHub Actions", "Docker", "Python", "Azure"],
+    tipo: ["DevOps"],
+    etapas: ["Build", "Teste", "Deploy", "Monitoramento"],
+    ano: 2025,
+    duracao: "6 semanas",
+    capa: "",
+    video: "",
+    powerbi: "",
+    repo: "#",
+    problema: "Publicação dos pipelines era manual e quebrava em produção sem ninguém perceber.",
+    solucao: "Esteira no GitHub Actions com teste em cada push, imagem versionada e alerta de falha.",
+    resultado: "Falha passou a ser detectada na esteira, e não pelo usuário no dia seguinte."
+  },
+  {
+    titulo: "Painel de turnover e absenteísmo",
+    resumo: "Indicadores de rotatividade por área e tempo de casa, com recorte por gestor e alerta de risco de saída.",
+    negocio: ["RH"],
+    tecnologias: ["Power BI", "SQL", "DAX"],
+    tipo: ["End-to-end"],
+    etapas: ["Ingestão", "Tratamento", "Modelagem", "Visualização", "Entrega"],
+    ano: 2025,
+    duracao: "4 semanas",
+    capa: "",
+    video: "",
+    powerbi: "",
+    repo: "#",
+    problema: "RH acompanhava rotatividade em planilha fechada uma vez por mês.",
+    solucao: "Modelo com histórico de headcount e desligamento, atualizado diariamente.",
+    resultado: "Gestor passou a ver o próprio time sem pedir relatório."
+  },
+  {
+    titulo: "Análise de funil e custo de aquisição",
+    resumo: "Junta dados de campanha e de vendas para mostrar quanto custa cada cliente por canal e onde o funil vaza.",
+    negocio: ["Marketing", "Vendas"],
+    tecnologias: ["Python", "SQL", "Power BI"],
+    tipo: ["End-to-end"],
+    etapas: ["Ingestão", "Tratamento", "Modelagem", "Visualização", "Entrega"],
+    ano: 2024,
+    duracao: "5 semanas",
+    capa: "",
+    video: "",
+    powerbi: "",
+    repo: "#",
+    problema: "Investimento por canal era decidido no achismo, sem ligar campanha a venda fechada.",
+    solucao: "Integração das duas bases com atribuição por canal e cálculo de CAC.",
+    resultado: "Verba passou a ser realocada com base em custo por cliente, não em impressão."
+  }
+];
+
+const GRUPOS = [
+  { chave: "negocio",     titulo: "Negócios" },
+  { chave: "tecnologias", titulo: "Tecnologias" },
+  { chave: "tipo",        titulo: "Escopo" }
+];
+
+/* ============================================================
+   Daqui para baixo você não precisa mexer.
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const selecionados = {};
+GRUPOS.forEach(g => selecionados[g.chave] = new Set());
+
+function montarFiltros(){
+  const wrap = $('#filter-groups');
+  wrap.innerHTML = '';
+  GRUPOS.forEach(g => {
+    const contagem = {};
+    PROJETOS.forEach(p => (p[g.chave] || []).forEach(v => contagem[v] = (contagem[v] || 0) + 1));
+    const opcoes = Object.keys(contagem).sort((a,b) => a.localeCompare(b,'pt-BR'));
+    if(!opcoes.length) return;
+
+    const box = document.createElement('div');
+    box.className = 'fgroup';
+    box.innerHTML = '<h2 class="fgroup__title">' + esc(g.titulo) + '</h2>';
+
+    opcoes.forEach(op => {
+      const id = g.chave + '-' + op.replace(/\W+/g,'-').toLowerCase();
+      const label = document.createElement('label');
+      label.className = 'fopt';
+      label.setAttribute('for', id);
+      label.innerHTML =
+        '<input type="checkbox" id="' + id + '" value="' + esc(op) + '" data-grupo="' + g.chave + '">' +
+        '<span>' + esc(op) + '</span>' +
+        '<span class="fopt__count">' + contagem[op] + '</span>';
+      label.querySelector('input').addEventListener('change', e => {
+        const set = selecionados[e.target.dataset.grupo];
+        e.target.checked ? set.add(e.target.value) : set.delete(e.target.value);
+        render();
+      });
+      box.appendChild(label);
+    });
+    wrap.appendChild(box);
+  });
+}
+
+function filtrar(){
+  const termo = $('#search').value.trim().toLowerCase();
+  let lista = PROJETOS.filter(p => {
+    const passa = GRUPOS.every(g => {
+      const set = selecionados[g.chave];
+      if(!set.size) return true;
+      return (p[g.chave] || []).some(v => set.has(v));
+    });
+    if(!passa) return false;
+    if(!termo) return true;
+    const texto = (p.titulo + ' ' + p.resumo + ' ' +
+      [].concat(p.negocio||[], p.tecnologias||[], p.tipo||[]).join(' ')).toLowerCase();
+    return texto.includes(termo);
+  });
+  const ordem = $('#sort').value;
+  lista.sort((a,b) =>
+    ordem === 'az'     ? a.titulo.localeCompare(b.titulo,'pt-BR') :
+    ordem === 'antigo' ? a.ano - b.ano : b.ano - a.ano
+  );
+  return lista;
+}
+
+function render(){
+  const lista = filtrar();
+  const ativos = GRUPOS.reduce((n,g) => n + selecionados[g.chave].size, 0);
+
+  $('#count').textContent = lista.length === PROJETOS.length
+    ? 'Mostrando todos os ' + PROJETOS.length + ' projetos'
+    : 'Mostrando ' + lista.length + ' de ' + PROJETOS.length + ' projetos';
+  $('#clear-filters').disabled = ativos === 0 && !$('#search').value;
+  $('#filters-toggle-text').textContent = ativos ? 'Filtros (' + ativos + ')' : 'Filtrar projetos';
+
+  if(!lista.length){
+    $('#projects').innerHTML = '<p class="empty">Nenhum projeto com essa combinação de filtros.</p>';
+    return;
+  }
+
+  $('#projects').innerHTML = lista.map(p => {
+    const i = PROJETOS.indexOf(p);
+
+    const capa = p.capa
+      ? '<img src="' + esc(p.capa) + '" alt="Prévia do projeto ' + esc(p.titulo) + '" loading="lazy">'
+      : '<div class="proj__cover-empty">Coloque a capa em<br>' + (p.capa || 'assets/') + '</div>';
+
+    const selos =
+      (p.video   ? '<span class="badge"><svg class="icon" style="width:.8rem;height:.8rem"><use href="#i-play"/></svg>Vídeo</span>' : '') +
+      (p.powerbi ? '<span class="badge"><svg class="icon" style="width:.8rem;height:.8rem"><use href="#i-chart"/></svg>Painel ao vivo</span>' : '');
+
+    const fluxo = (p.etapas||[]).map(e => '<span class="flow__step">' + esc(e) + '</span>')
+      .join('<span class="flow__arrow">▸</span>');
+
+    const tags =
+      (p.negocio||[]).map(t => '<li class="tag tag--negocio">' + esc(t) + '</li>').join('') +
+      (p.tecnologias||[]).map(t => '<li class="tag tag--tec">' + esc(t) + '</li>').join('') +
+      (p.tipo||[]).map(t => '<li class="tag tag--tipo">' + esc(t) + '</li>').join('');
+
+    return '<article class="proj">' +
+      '<div class="proj__cover">' + capa +
+        (selos ? '<div class="proj__badges">' + selos + '</div>' : '') +
+      '</div>' +
+      '<div class="proj__body">' +
+        '<div class="proj__top">' +
+          '<h3 class="proj__title">' + esc(p.titulo) + '</h3>' +
+          '<span class="proj__meta"><svg class="icon" style="width:.9rem;height:.9rem"><use href="#i-clock"/></svg>' +
+            p.ano + (p.duracao ? ' · ' + esc(p.duracao) : '') + '</span>' +
+        '</div>' +
+        '<p class="proj__desc">' + esc(p.resumo) + '</p>' +
+        (fluxo ? '<div class="flow">' + fluxo + '</div>' : '') +
+        '<ul class="proj__tags">' + tags + '</ul>' +
+        '<div class="proj__actions">' +
+          '<button class="btn-sm btn-sm--solid" data-abrir="' + i + '">' +
+            '<svg class="icon" style="width:1rem;height:1rem"><use href="#i-zoom"/></svg> Ver detalhes</button>' +
+          (p.repo ? '<a class="btn-sm btn-sm--ghost" href="' + esc(p.repo) + '" target="_blank" rel="noopener">' +
+            '<svg class="icon" style="width:1rem;height:1rem"><use href="#i-github"/></svg> Repositório</a>' : '') +
+        '</div>' +
+      '</div>' +
+    '</article>';
+  }).join('');
+
+  document.querySelectorAll('[data-abrir]').forEach(b =>
+    b.addEventListener('click', () => abrirModal(PROJETOS[+b.dataset.abrir]))
+  );
+}
+
+/*=============== MODAL ===============*/
+function midia(p, aba){
+  if(aba === 'powerbi' && p.powerbi)
+    return '<iframe src="' + esc(p.powerbi) + '" title="Painel do projeto" allowfullscreen></iframe>';
+  if(aba === 'video' && p.video){
+    return /\.(mp4|webm)$/i.test(p.video)
+      ? '<video src="' + esc(p.video) + '" controls playsinline></video>'
+      : '<iframe src="' + esc(p.video) + '" title="Vídeo do projeto" allowfullscreen ' +
+        'allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"></iframe>';
+  }
+  if(p.capa) return '<img src="' + esc(p.capa) + '" alt="Prévia do projeto">';
+  return '<div class="proj__cover-empty">Sem mídia cadastrada neste projeto</div>';
+}
+
+function abrirModal(p){
+  $('#modal-title').textContent = p.titulo;
+  $('#modal-meta').textContent = p.ano + (p.duracao ? ' · ' + p.duracao : '') +
+    ' · ' + [].concat(p.negocio||[]).join(', ');
+
+  const abas = [];
+  if(p.capa)    abas.push(['imagem','Imagem']);
+  if(p.video)   abas.push(['video','Vídeo']);
+  if(p.powerbi) abas.push(['powerbi','Painel ao vivo']);
+
+  const trocar = aba => {
+    $('#modal-media').innerHTML = midia(p, aba);
+    document.querySelectorAll('#modal-tabs .tab').forEach(t =>
+      t.classList.toggle('is-active', t.dataset.aba === aba));
+  };
+
+  $('#modal-tabs').innerHTML = abas.length > 1
+    ? abas.map(([k,r]) => '<button class="tab" data-aba="' + k + '">' + r + '</button>').join('')
+    : '';
+  document.querySelectorAll('#modal-tabs .tab').forEach(t =>
+    t.addEventListener('click', () => trocar(t.dataset.aba)));
+
+  /* abre no vídeo se houver, senão no painel, senão na imagem */
+  trocar(abas.length ? abas[abas.length > 1 && p.video ? abas.findIndex(a => a[0]==='video') : 0][0] : 'imagem');
+
+  const bloco = (t,v) => v ? '<div class="modal__block"><h4>' + t + '</h4><p>' + esc(v) + '</p></div>' : '';
+  $('#modal-content').innerHTML =
+    (p.etapas||[]).length
+      ? '<div class="modal__block"><h4>Etapas cobertas</h4><div class="flow">' +
+        p.etapas.map(e => '<span class="flow__step">' + esc(e) + '</span>')
+          .join('<span class="flow__arrow">▸</span>') + '</div></div>'
+      : '';
+  $('#modal-content').innerHTML +=
+    bloco('Problema', p.problema) +
+    bloco('O que eu fiz', p.solucao) +
+    bloco('Resultado', p.resultado) +
+    '<div class="modal__block"><h4>Tecnologias</h4><ul class="proj__tags">' +
+      (p.tecnologias||[]).map(t => '<li class="tag tag--tec">' + esc(t) + '</li>').join('') +
+    '</ul></div>';
+
+  $('#modal-foot').innerHTML =
+    (p.repo ? '<a class="btn-sm btn-sm--solid" href="' + esc(p.repo) + '" target="_blank" rel="noopener">' +
+      '<svg class="icon" style="width:1rem;height:1rem"><use href="#i-github"/></svg> Ver o código</a>' : '') +
+    (p.powerbi ? '<a class="btn-sm btn-sm--ghost" href="' + esc(p.powerbi) + '" target="_blank" rel="noopener">' +
+      '<svg class="icon" style="width:1rem;height:1rem"><use href="#i-chart"/></svg> Abrir o painel</a>' : '');
+
+  $('#modal').classList.add('is-open');
+  document.body.classList.add('no-scroll');
+  $('#modal-close').focus();
+}
+
+function fecharModal(){
+  $('#modal').classList.remove('is-open');
+  document.body.classList.remove('no-scroll');
+  $('#modal-media').innerHTML = '';   /* para o vídeo ao fechar */
+}
+$('#modal-close').addEventListener('click', fecharModal);
+$('#modal').addEventListener('click', e => { if(e.target.id === 'modal') fecharModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') fecharModal(); });
+
+/*=============== CONTROLES ===============*/
+$('#search').addEventListener('input', render);
+$('#sort').addEventListener('change', render);
+$('#clear-filters').addEventListener('click', () => {
+  GRUPOS.forEach(g => selecionados[g.chave].clear());
+  document.querySelectorAll('#filter-groups input').forEach(i => i.checked = false);
+  $('#search').value = '';
+  render();
+});
+$('#filters-toggle').addEventListener('click', e => {
+  const aberto = $('#filters-panel').classList.toggle('is-open');
+  e.currentTarget.setAttribute('aria-expanded', aberto);
+});
+
+montarFiltros();
+render();
+
+/*=============== MENU E TEMA ===============*/
+const navMenu = document.getElementById('nav-menu');
+document.getElementById('nav-toggle').addEventListener('click', () => navMenu.classList.add('show-menu'));
+document.getElementById('nav-close').addEventListener('click', () => navMenu.classList.remove('show-menu'));
+
+(function(){
+  const body = document.body;
+  const icon = document.getElementById('theme-icon').querySelector('use');
+  const apply = dark => {
+    body.classList.toggle('dark-theme', dark);
+    icon.setAttribute('href', dark ? '#i-sun' : '#i-moon');
+  };
+  let saved = null;
+  try { saved = localStorage.getItem('tema'); } catch(e) {}
+  if (saved) apply(saved === 'dark');
+  else apply(window.matchMedia('(prefers-color-scheme: dark)').matches);
+  document.getElementById('theme-button').addEventListener('click', () => {
+    const dark = !body.classList.contains('dark-theme');
+    apply(dark);
+    try { localStorage.setItem('tema', dark ? 'dark' : 'light'); } catch(e) {}
+  });
+})();
+</script>
+</body>
+</html>

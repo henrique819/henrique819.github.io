@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" font-family="Segoe UI, Poppins, sans-serif">
+  <!-- EXEMPLO: troque este arquivo por um print real do seu dashboard (1200x675) -->
+  <rect width="1200" height="675" fill="#f3f4f7"/>
+
+  <!-- barra superior -->
+  <rect width="1200" height="64" fill="#1b1f2a"/>
+  <circle cx="34" cy="32" r="9" fill="#f2c811"/>
+  <text x="56" y="38" fill="#ffffff" font-size="17" font-weight="600">Perdas e Rastreabilidade — Visão Operacional</text>
+  <rect x="1010" y="18" width="76" height="28" rx="5" fill="#2f3648"/>
+  <text x="1026" y="37" fill="#c9cede" font-size="12">Últimos 30d</text>
+  <rect x="1098" y="18" width="76" height="28" rx="5" fill="#2f3648"/>
+  <text x="1112" y="37" fill="#c9cede" font-size="12">Todos hubs</text>
+
+  <!-- KPIs -->
+  <g>
+    <rect x="28" y="88" width="272" height="104" rx="10" fill="#ffffff"/>
+    <text x="48" y="118" fill="#6b7280" font-size="12" letter-spacing="1">PACOTES RASTREADOS</text>
+    <text x="48" y="160" fill="#111827" font-size="34" font-weight="700">1,84 mi</text>
+    <text x="196" y="160" fill="#16a34a" font-size="13" font-weight="600">▲ 4,2%</text>
+
+    <rect x="316" y="88" width="272" height="104" rx="10" fill="#ffffff"/>
+    <text x="336" y="118" fill="#6b7280" font-size="12" letter-spacing="1">OCORRÊNCIAS ABERTAS</text>
+    <text x="336" y="160" fill="#111827" font-size="34" font-weight="700">312</text>
+    <text x="424" y="160" fill="#dc2626" font-size="13" font-weight="600">▲ 1,1%</text>
+
+    <rect x="604" y="88" width="272" height="104" rx="10" fill="#ffffff"/>
+    <text x="624" y="118" fill="#6b7280" font-size="12" letter-spacing="1">TEMPO MÉDIO DE APURAÇÃO</text>
+    <text x="624" y="160" fill="#111827" font-size="34" font-weight="700">7 min</text>
+    <text x="716" y="160" fill="#16a34a" font-size="13" font-weight="600">▼ 96%</text>
+
+    <rect x="892" y="88" width="280" height="104" rx="10" fill="#ffffff"/>
+    <text x="912" y="118" fill="#6b7280" font-size="12" letter-spacing="1">VALOR RECUPERADO</text>
+    <text x="912" y="160" fill="#111827" font-size="34" font-weight="700">R$ 418 mil</text>
+  </g>
+
+  <!-- gráfico de barras -->
+  <rect x="28" y="212" width="560" height="256" rx="10" fill="#ffffff"/>
+  <text x="48" y="242" fill="#111827" font-size="14" font-weight="600">Ocorrências por etapa da malha</text>
+  <g fill="#1470dd">
+    <rect x="60"  y="300" width="52" height="128" rx="3"/>
+    <rect x="140" y="266" width="52" height="162" rx="3"/>
+    <rect x="220" y="330" width="52" height="98"  rx="3"/>
+    <rect x="300" y="286" width="52" height="142" rx="3"/>
+    <rect x="380" y="352" width="52" height="76"  rx="3"/>
+    <rect x="460" y="378" width="52" height="50"  rx="3" fill="#8fb9ef"/>
+  </g>
+  <line x1="48" y1="428" x2="568" y2="428" stroke="#e5e7eb" stroke-width="1"/>
+  <g fill="#6b7280" font-size="11" text-anchor="middle">
+    <text x="86"  y="448">Coleta</text>
+    <text x="166" y="448">Hub</text>
+    <text x="246" y="448">Linha</text>
+    <text x="326" y="448">Base</text>
+    <text x="406" y="448">Rota</text>
+    <text x="486" y="448">Entrega</text>
+  </g>
+
+  <!-- linha do tempo -->
+  <rect x="604" y="212" width="568" height="256" rx="10" fill="#ffffff"/>
+  <text x="624" y="242" fill="#111827" font-size="14" font-weight="600">Perda x recuperação por semana</text>
+  <polyline points="632,392 700,368 768,378 836,330 904,344 972,300 1040,286 1108,262 1152,250"
+            fill="none" stroke="#1470dd" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="632,412 700,404 768,398 836,386 904,392 972,372 1040,364 1108,350 1152,340"
+            fill="none" stroke="#f2a413" stroke-width="3" stroke-dasharray="7 5" stroke-linecap="round"/>
+  <line x1="624" y1="432" x2="1152" y2="432" stroke="#e5e7eb" stroke-width="1"/>
+  <circle cx="632" cy="462" r="5" fill="#1470dd"/><text x="646" y="466" fill="#6b7280" font-size="11">Recuperado</text>
+  <circle cx="742" cy="462" r="5" fill="#f2a413"/><text x="756" y="466" fill="#6b7280" font-size="11">Perda confirmada</text>
+
+  <!-- tabela -->
+  <rect x="28" y="488" width="1144" height="160" rx="10" fill="#ffffff"/>
+  <text x="48" y="518" fill="#111827" font-size="14" font-weight="600">Últimas ocorrências com responsável identificado</text>
+  <g font-size="12" fill="#6b7280">
+    <text x="48"  y="548">RASTREIO</text>
+    <text x="248" y="548">ÚLTIMO SCAN</text>
+    <text x="488" y="548">HUB</text>
+    <text x="708" y="548">RESPONSÁVEL</text>
+    <text x="988" y="548">STATUS</text>
+  </g>
+  <line x1="48" y1="558" x2="1152" y2="558" stroke="#e5e7eb"/>
+  <g font-size="12" fill="#111827">
+    <text x="48"  y="582">BR8842190273</text><text x="248" y="582">14/08 09:12</text><text x="488" y="582">Guarulhos</text><text x="708" y="582">Linha 07</text>
+    <text x="48"  y="608">BR8842118904</text><text x="248" y="608">14/08 11:47</text><text x="488" y="608">Osasco</text>   <text x="708" y="608">Base OSA-2</text>
+    <text x="48"  y="634">BR8841977321</text><text x="248" y="634">15/08 07:30</text><text x="488" y="634">Barueri</text>  <text x="708" y="634">Rota 214</text>
+  </g>
+  <rect x="988" y="570" width="86" height="20" rx="10" fill="#fde8e8"/><text x="1000" y="584" font-size="11" fill="#c0392b">Em apuração</text>
+  <rect x="988" y="596" width="86" height="20" rx="10" fill="#e6f4ea"/><text x="1006" y="610" font-size="11" fill="#1e7e34">Recuperado</text>
+  <rect x="988" y="622" width="86" height="20" rx="10" fill="#e6f4ea"/><text x="1006" y="636" font-size="11" fill="#1e7e34">Recuperado</text>
+
+  <!-- marca de exemplo -->
+  <text x="1152" y="668" text-anchor="end" font-size="11" fill="#9aa1ad">imagem de exemplo — substitua por um print real</text>
+</svg>
