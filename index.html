@@ -84,6 +84,7 @@ button,input,textarea{font-family:var(--body-font);font-size:var(--normal-font);
   transition:background-color .3s, transform .2s;
 }
 .button:hover{background-color:var(--primary-alt);transform:translateY(-2px)}
+.button:disabled{opacity:.6;cursor:progress;transform:none}
 .button--ghost{
   background:transparent;color:var(--primary);
   border:1.5px solid var(--primary);
@@ -248,6 +249,11 @@ button,input,textarea{font-family:var(--body-font);font-size:var(--normal-font);
 .contact__form-area{height:11rem}
 .contact__form-area textarea{resize:none}
 .contact__note{font-size:var(--smaller-font);color:var(--text-color-light)}
+.contact__status{font-size:var(--small-font);min-height:1.4rem}
+.contact__status.is-ok{color:var(--primary)}
+.contact__status.is-error{color:hsl(4,72%,52%)}
+/* campo isca contra robô de spam: some da tela e do leitor de tela */
+.contact__trap{position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden}
 
 /*=============== FOOTER ===============*/
 .footer{padding-top:2rem;margin-top:4rem}
@@ -376,14 +382,13 @@ button,input,textarea{font-family:var(--body-font);font-size:var(--normal-font);
     <div class="home__container container grid">
       <div class="home__content grid">
         <div class="home__social">
-          <!-- TROCAR pelos seus links -->
-          <a href="https://www.linkedin.com/" target="_blank" rel="noopener" class="home__social-icon" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/in/luis-henrique-carvalho01/" target="_blank" rel="noopener" class="home__social-icon" aria-label="LinkedIn">
             <svg class="icon"><use href="#i-linkedin"/></svg>
           </a>
           <a href="https://github.com/henrique819" target="_blank" rel="noopener" class="home__social-icon" aria-label="GitHub">
             <svg class="icon"><use href="#i-github"/></svg>
           </a>
-          <a href="mailto:luis@exemplo.com" class="home__social-icon" aria-label="E-mail">
+          <a href="mailto:henrique819@gmail.com" class="home__social-icon" aria-label="E-mail">
             <svg class="icon"><use href="#i-mail"/></svg>
           </a>
         </div>
@@ -460,7 +465,8 @@ button,input,textarea{font-family:var(--body-font);font-size:var(--normal-font);
         </div>
 
         <div class="about__buttons">
-          <a download href="assets/curriculo.pdf" class="button">
+          <!-- Coloque o PDF em assets/Luis-Henrique-Shikasho-Curriculo.pdf -->
+          <a download href="assets/Luis-Henrique-Shikasho-Curriculo.pdf" class="button">
             Baixar CV <svg class="icon"><use href="#i-download"/></svg>
           </a>
         </div>
@@ -632,8 +638,8 @@ button,input,textarea{font-family:var(--body-font);font-size:var(--normal-font);
         <div class="contact__card">
           <svg class="icon contact__card-icon"><use href="#i-mail"/></svg>
           <h3 class="contact__card-title">E-mail</h3>
-          <span class="contact__card-data">luis@exemplo.com</span>
-          <a href="mailto:luis@exemplo.com" class="contact__button">
+          <span class="contact__card-data">henrique819@gmail.com</span>
+          <a href="mailto:henrique819@gmail.com" class="contact__button">
             Escrever <svg class="icon" style="width:1rem;height:1rem"><use href="#i-arrow-right"/></svg>
           </a>
         </div>
@@ -641,8 +647,8 @@ button,input,textarea{font-family:var(--body-font);font-size:var(--normal-font);
         <div class="contact__card">
           <svg class="icon contact__card-icon"><use href="#i-phone"/></svg>
           <h3 class="contact__card-title">WhatsApp</h3>
-          <span class="contact__card-data">+55 11 90000-0000</span>
-          <a href="https://wa.me/5511900000000" target="_blank" rel="noopener" class="contact__button">
+          <span class="contact__card-data">+55 11 96605-0439</span>
+          <a href="https://wa.me/5511966050439" target="_blank" rel="noopener" class="contact__button">
             Chamar <svg class="icon" style="width:1rem;height:1rem"><use href="#i-arrow-right"/></svg>
           </a>
         </div>
@@ -650,39 +656,46 @@ button,input,textarea{font-family:var(--body-font);font-size:var(--normal-font);
         <div class="contact__card">
           <svg class="icon contact__card-icon"><use href="#i-linkedin"/></svg>
           <h3 class="contact__card-title">LinkedIn</h3>
-          <span class="contact__card-data">/in/exemplo</span>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noopener" class="contact__button">
+          <span class="contact__card-data">/in/luis-henrique-carvalho01</span>
+          <a href="https://www.linkedin.com/in/luis-henrique-carvalho01/" target="_blank" rel="noopener" class="contact__button">
             Abrir <svg class="icon" style="width:1rem;height:1rem"><use href="#i-arrow-right"/></svg>
           </a>
         </div>
       </div>
 
       <!--
-        O GitHub Pages é estático: não processa formulário sozinho.
-        Crie uma conta grátis no Formspree e troque o action abaixo pelo endpoint deles.
-        Enquanto não fizer isso, o botão só abre o seu e-mail.
+        As mensagens vão para uma planilha do Google Sheets, via Google Apps Script.
+        Cole abaixo, em ENDPOINT_PLANILHA, a URL do app da web que você publicar
+        (as instruções estão no arquivo codigo-apps-script.gs).
       -->
-      <form onsubmit="return false" class="contact__form">
+      <form class="contact__form" id="contact-form">
         <div class="contact__form-div">
           <label class="contact__form-tag" for="nome">Nome</label>
           <input type="text" id="nome" name="nome" required class="contact__form-input" placeholder="Como devo te chamar">
         </div>
         <div class="contact__form-div">
           <label class="contact__form-tag" for="email">E-mail</label>
-          <input type="email" id="email" name="email" required class="contact__form-input" placeholder="luis@exemplo.com">
+          <input type="email" id="email" name="email" required class="contact__form-input" placeholder="seu@email.com">
         </div>
         <div class="contact__form-div contact__form-area">
           <label class="contact__form-tag" for="msg">Mensagem</label>
           <textarea id="msg" name="mensagem" required class="contact__form-input" placeholder="Conte o que você precisa"></textarea>
         </div>
+
+        <!-- isca para robô de spam: humano nunca preenche -->
+        <div class="contact__trap" aria-hidden="true">
+          <label for="empresa-site">Não preencha este campo</label>
+          <input type="text" id="empresa-site" name="empresa_site" tabindex="-1" autocomplete="off">
+        </div>
+
         <div>
-          <button type="submit" class="button">
+          <button type="submit" class="button" id="contact-submit">
             Enviar mensagem <svg class="icon"><use href="#i-send"/></svg>
           </button>
         </div>
+        <p class="contact__status" id="contact-status" role="status" aria-live="polite"></p>
         <p class="contact__note">Costumo responder em até um dia útil.</p>
       </form>
-      <p class="contact__note" style="text-align:center;font-size:.82rem;color:var(--text-color-light);margin-top:.75rem">Formulário de demonstração — para receber mensagens de verdade, conecte um serviço como o Formspree.</p>
     </div>
   </section>
 
@@ -752,7 +765,54 @@ window.addEventListener('scroll', () => {
     try { localStorage.setItem('tema', dark ? 'dark' : 'light'); } catch(e) {}
   });
 })();
+
+/*=============== FORMULÁRIO -> GOOGLE SHEETS ===============*/
+(function(){
+  /* Cole aqui a URL do app da web publicado no Apps Script.
+     Formato: https://script.google.com/macros/s/AKfy.../exec  */
+  const ENDPOINT_PLANILHA = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT';
+
+  const form   = document.getElementById('contact-form');
+  const botao  = document.getElementById('contact-submit');
+  const status = document.getElementById('contact-status');
+
+  const mostrar = (texto, tipo) => {
+    status.textContent = texto;
+    status.className = 'contact__status' + (tipo ? ' is-' + tipo : '');
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (form.empresa_site.value) return;            // robô preencheu a isca
+    if (!form.reportValidity()) return;
+
+    if (ENDPOINT_PLANILHA.startsWith('COLE_AQUI')) {
+      mostrar('O envio ainda não foi configurado. Escreva para henrique819@gmail.com.', 'error');
+      return;
+    }
+
+    botao.disabled = true;
+    mostrar('Enviando...');
+
+    const dados = new URLSearchParams({
+      nome: form.nome.value.trim(),
+      email: form.email.value.trim(),
+      mensagem: form.mensagem.value.trim(),
+      origem: location.href
+    });
+
+    try {
+      await fetch(ENDPOINT_PLANILHA, { method:'POST', mode:'no-cors', body: dados });
+      form.reset();
+      mostrar('Mensagem enviada. Respondo em até um dia útil.', 'ok');
+    } catch (err) {
+      mostrar('Não consegui enviar agora. Escreva para henrique819@gmail.com.', 'error');
+    } finally {
+      botao.disabled = false;
+    }
+  });
+})();
 </script>
 </body>
 </html>
-
